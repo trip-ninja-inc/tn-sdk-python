@@ -34,7 +34,7 @@ compressed_data = tn_client.prepare_data_for_generate_solutions(request_data)
 ## Setup
 
 From an active virtual env, `cd` into the directory
-``pip install . -e``
+``pip install -e .``
 
-> `-e` installs it in editable mode. 
+> `-e` installs it in [editable](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) mode. 
 > Meaning it will update as you modify the source code without having to re-run the installation command.
