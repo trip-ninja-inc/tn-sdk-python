@@ -24,3 +24,17 @@ request_data = "{}" # JSON encoded string representing the request data
 compressed_data = tn_client.prepare_data_for_generate_solutions(request_data)
 # Compresses the data and returns the compressed_data
 ```
+
+
+---
+
+
+# Development
+
+## Setup
+
+From an active virtual env, `cd` into the directory
+``pip install . -e``
+
+> `-e` installs it in editable mode. 
+> Meaning it will update as you modify the source code without having to re-run the installation command.
