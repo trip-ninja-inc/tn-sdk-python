@@ -1,6 +1,6 @@
-# TripNinja SDK
+# Trip Ninja SDK
 
-The TripNinja Python SDK is used for interacting with the TripNinjaAPI 
+The Trip Ninja Python SDK is used for interacting with the Trip Ninja API 
 through a easy-to-use library and suite of tools.
 
 ## Installing
