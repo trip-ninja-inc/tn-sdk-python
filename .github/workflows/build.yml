@@ -10,6 +10,7 @@ on:
       - '**'  # This will run on PR commits or any other branch
   pull_request:
     types: [opened, synchronize, reopened, labeled]
+
 jobs:
   tests:
     name: Python ${{ matrix.python-version }} Tests via tox
@@ -36,7 +37,7 @@ jobs:
       - name: Run tox
         run: tox -e py
 
-      - name: Upload coverage data
+      - name: Upload coverage artifacts
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.python-version }}
@@ -67,7 +68,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.10.15
+          python-version: "3.12"
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v4
