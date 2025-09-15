@@ -1,0 +1,93 @@
+name: PR Decoration
+on:
+  push:
+    branches:
+      - develop
+      - production
+      - pre-production
+      - 'release/v*'  # Branches for the production release e.g. release/vx.x.x
+      - 'staging-v*'  # Branches for the pre-production release e.g. staging-vx.x.x
+      - '**'  # This will run on PR commits or any other branch
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }} Tests via tox
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install tox
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox coverage
+
+      - name: Run tox
+        run: tox -e py
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.python-version }}
+          path: .coverage.py*
+          retention-days: 1
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    needs: tests
+    if: |
+      (
+        github.ref == 'refs/heads/develop' ||
+        github.ref == 'refs/heads/production' ||
+        github.ref == 'refs/heads/pre-production' ||
+        startsWith(github.ref, 'refs/heads/release/v') ||
+        startsWith(github.ref, 'refs/heads/staging-v')
+      ) ||
+      (
+        github.event_name == 'pull_request' &&
+        contains(github.event.pull_request.labels.*.name, 'ready-for-sonar-checks')
+      )
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10.15
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: coverages
+
+      - name: Merge coverage reports
+        run: |
+          python -m pip install coverage
+          coverage combine coverages/**/.coverage.py*
+          coverage xml
+
+      - name: Print merged coverage.xml
+        run: cat coverage.xml
+
+      - name: Override Coverage Source Path for Sonar
+        run: sed -i "s|<source>.*</source>|<source>/github/workspace</source>|g" coverage.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
