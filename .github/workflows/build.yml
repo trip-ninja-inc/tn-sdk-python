@@ -78,8 +78,8 @@ jobs:
       - name: Merge coverage reports
         run: |
           python -m pip install coverage
-          coverage combine coverages/**/.coverage.py*
-          coverage xml
+          coverage combine coverages/
+          coverage xml -o coverage.xml
 
       - name: Print merged coverage.xml
         run: cat coverage.xml
