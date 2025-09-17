@@ -1,6 +1,3 @@
-from tn_sdk.utils.constants import DEFAULT_SDK_ERROR, INVALID_DATA_ERROR
-
-
 class TnApiException(Exception):
     """
     Base class for all Trip Ninja SDK exceptions.
@@ -9,10 +6,13 @@ class TnApiException(Exception):
     :param code: Optional error code (similar to API error codes)
     """
 
+    DEFAULT_MESSAGE = "Fallback error message for Trip Ninja SDK"
+    DEFAULT_CODE = "SDK_ERROR"
+
     def __init__(
         self,
-        message: str = DEFAULT_SDK_ERROR.get("message"),
-        code: str = DEFAULT_SDK_ERROR.get("code"),
+        message: str = DEFAULT_MESSAGE,
+        code: str = DEFAULT_CODE,
     ):
         super().__init__(message)
         self.code = code
@@ -25,5 +25,8 @@ class TnApiException(Exception):
 class InvalidDataException(TnApiException):
     """Raised when invalid or malformed data is passed to an SDK function."""
 
-    def __init__(self, message: str = INVALID_DATA_ERROR.get("message")):
-        super().__init__(message, code=INVALID_DATA_ERROR.get("code"))
+    DEFAULT_MESSAGE = "Invalid or malformed data"
+    DEFAULT_CODE = "INVALID_DATA"
+
+    def __init__(self, message: str = DEFAULT_MESSAGE, code: str = DEFAULT_CODE):
+        super().__init__(message, code=code)

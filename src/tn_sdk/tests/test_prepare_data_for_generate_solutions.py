@@ -33,4 +33,4 @@ class TestPrepareDataForGenerateSolutions(unittest.TestCase):
             self.api_prod.prepare_data_for_generate_solutions(None)
 
         self.assertIn("Input must be a JSON-encoded string", str(cm.exception))
-        self.assertEqual(cm.exception.code, "TN_INVALID_DATA")
+        self.assertEqual(cm.exception.code, "INVALID_DATA")
