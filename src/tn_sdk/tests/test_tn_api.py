@@ -1,6 +1,6 @@
 import unittest
 
-from src.tn_sdk import TnApi
+from tn_sdk import TnApi
 
 
 class TestTnApi(unittest.TestCase):
