@@ -30,7 +30,7 @@ class TestPrepareDataForGenerateSolutions(unittest.TestCase):
     def test_prepare_data_for_generate_solutions__invalid_data__returns_exception(self):
         # Passing invalid input should raise a JSON exception
         with self.assertRaises(InvalidDataException) as cm:
-            self.api_prod.prepare_data_for_generate_solutions("invalid JSON string")
+            self.api_prod.prepare_data_for_generate_solutions(None)
 
-        self.assertIn("Input is not valid JSON", str(cm.exception))
+        self.assertIn("Input must be a JSON-encoded string", str(cm.exception))
         self.assertEqual(cm.exception.code, "TN_INVALID_DATA")

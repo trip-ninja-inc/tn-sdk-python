@@ -44,20 +44,8 @@ class TnApi:
         if not isinstance(json_data, str):
             raise InvalidDataException("Input must be a JSON-encoded string")
 
-        try:
-            json.loads(json_data)
-        except json.JSONDecodeError as e:
-            raise InvalidDataException(
-                f"Input is not valid JSON: {str(e)}"
-            ) from e
-
-        try:
-            compressed_data = zlib.compress(
-                json_data.encode("utf-8"), level=self._GZIP_DEFAULT_COMPRESSION_LEVEL
-            )
-            encoded_compressed_response = b64encode(compressed_data)
-            return encoded_compressed_response
-        except (TypeError, ValueError, zlib.error) as e:
-            raise InvalidDataException(
-                f"Failed to prepare data for generate_solutions: {str(e)}"
-            ) from e
+        compressed_data = zlib.compress(
+            json_data.encode("utf-8"), level=self._GZIP_DEFAULT_COMPRESSION_LEVEL
+        )
+        encoded_compressed_response = b64encode(compressed_data)
+        return encoded_compressed_response
