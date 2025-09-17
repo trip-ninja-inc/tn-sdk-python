@@ -5,9 +5,9 @@ on:
       - develop
       - production
       - pre-production
-      - 'release/v*'  # Branches for the production release e.g. release/vx.x.x
-      - 'staging-v*'  # Branches for the pre-production release e.g. staging-vx.x.x
-      - '**'  # This will run on PR commits or any other branch
+      - "release/v*"  # Branches for the production release e.g. release/vx.x.x
+      - "staging-v*"  # Branches for the pre-production release e.g. staging-vx.x.x
+      - "**"  # This will run on PR commits or any other branch
   pull_request:
     types: [opened, synchronize, reopened, labeled]
 
@@ -38,13 +38,13 @@ jobs:
         run: tox -e py
 
       - name: Generate coverage.xml
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.10'
         run: |
          coverage combine
          coverage xml -o coverage.xml
 
       - name: Upload coverage.xml
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.10'
         uses: actions/upload-artifact@v4
         with:
            name: coverage-reports
@@ -74,7 +74,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.10"
 
       - name: Download coverage artifact
         uses: actions/download-artifact@v4
