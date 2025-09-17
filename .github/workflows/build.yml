@@ -37,11 +37,18 @@ jobs:
       - name: Run tox
         run: tox -e py
 
-      - name: Upload coverage artifacts
+      - name: Generate coverage.xml
+        if: matrix.python-version == '3.12'
+        run: |
+         coverage combine
+         coverage xml -o coverage.xml
+
+      - name: Upload coverage.xml
+        if: matrix.python-version == '3.12'
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-reports
-          path: coverages/**/*.xml
+           name: coverage-reports
+           path: coverage.xml
 
   sonarcloud:
     name: SonarCloud
@@ -69,16 +76,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Download coverage artifacts
+      - name: Download coverage artifact
         uses: actions/download-artifact@v4
         with:
-          path: coverages
-
-      - name: Merge coverage reports
-        run: |
-          python -m pip install coverage
-          coverage combine coverages/.coverage*
-          coverage xml -o coverage.xml
+            name: coverage-reports
+            path: .
 
       - name: Print merged coverage.xml
         run: cat coverage.xml
