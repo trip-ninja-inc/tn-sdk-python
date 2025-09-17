@@ -40,9 +40,8 @@ jobs:
       - name: Upload coverage artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ matrix.python-version }}
-          path: .coverage*
-          retention-days: 1
+          name: coverage-reports
+          path: coverages/**/*.xml
 
   sonarcloud:
     name: SonarCloud
@@ -78,7 +77,7 @@ jobs:
       - name: Merge coverage reports
         run: |
           python -m pip install coverage
-          coverage combine coverages/**/.coverage*
+          coverage combine coverages/.coverage*
           coverage xml -o coverage.xml
 
       - name: Print merged coverage.xml
