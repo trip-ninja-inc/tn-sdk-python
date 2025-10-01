@@ -79,13 +79,22 @@ jobs:
               toml.dump(data, f)
           EOF
 
-      - name: Commit version bump
+      - name: Commit version bump to develop and master
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml
           git commit -m "Bump version to ${{ steps.get_version.outputs.version }}"
-          git push origin HEAD:main
+
+          git fetch origin develop
+          git checkout develop
+          git merge --no-edit -
+          git push origin develop
+
+          git fetch origin master
+          git checkout master
+          git merge --no-edit -
+          git push origin master
 
       - name: Build package
         run: python -m build
