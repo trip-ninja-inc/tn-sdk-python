@@ -19,7 +19,7 @@ class TnApi:
     _TN_BASE_SANDBOX_URL: str = SANDBOX_API_URL
     _GZIP_DEFAULT_COMPRESSION_LEVEL: int = DEFAULT_COMPRESSION_LEVEL
 
-    def __init__(self, access_token: str, refresh_token: str, is_sandbox: bool = False):
+    def __init__(self, access_token: str = "", refresh_token: str = "", is_sandbox: bool = False):
         """
         Initializes and instantiates the SDK client.
 

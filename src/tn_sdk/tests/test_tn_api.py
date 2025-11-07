@@ -19,3 +19,9 @@ class TestTnApi(unittest.TestCase):
         self.assertEqual(self.api_prod._access_token, "abc123")
         self.assertEqual(self.api_prod._refresh_token, "refresh456")
         self.assertEqual(self.api_prod.base_url, PRODUCTION_API_URL)
+
+    def test_tn_api__instantiate_prod_without_tokens__returns_api_details(self):
+        another_api = TnApi()
+        self.assertEqual(another_api._access_token, "")
+        self.assertEqual(another_api._refresh_token, "")
+        self.assertEqual(another_api.base_url, PRODUCTION_API_URL)
