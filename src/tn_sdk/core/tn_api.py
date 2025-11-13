@@ -19,19 +19,10 @@ class TnApi:
     _TN_BASE_SANDBOX_URL: str = SANDBOX_API_URL
     _GZIP_DEFAULT_COMPRESSION_LEVEL: int = DEFAULT_COMPRESSION_LEVEL
 
-    def __init__(self, access_token: str, refresh_token: str, is_sandbox: bool = False):
+    def __init__(self):
         """
         Initializes and instantiates the SDK client.
-
-        :param access_token: The token provided by the Admin Panel that is used to gain access to the API.
-        :param refresh_token: The token provided by the Admin Panel that is used to refresh a user's access token.
-        :param is_sandbox: Whether the client is connecting to the sandbox or the production environment.
         """
-        self._access_token: str = access_token
-        self._refresh_token: str = refresh_token
-        self.base_url: str = (
-            self._TN_BASE_SANDBOX_URL if is_sandbox else self._TN_BASE_PROD_URL
-        )
 
     def prepare_data_for_generate_solutions(self, json_data: str) -> bytes:
         """

@@ -10,7 +10,7 @@ from tn_sdk.exceptions.exceptions import InvalidDataException
 class TestPrepareDataForGenerateSolutions(unittest.TestCase):
     def setUp(self):
         """Create a reusable client instance for tests."""
-        self.api_prod = TnApi("abc123", "refresh456", is_sandbox=False)
+        self.api_prod = TnApi()
 
     def test_prepare_data_for_generate_solutions__valid_data__returns_bytes(self):
         input_data = {"test": "value"}
