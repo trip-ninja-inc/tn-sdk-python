@@ -98,7 +98,6 @@ class TnApi:
         )
         adapter = HTTPAdapter(max_retries=retry_strategy)
         self.session.mount("https://", adapter)
-        self.session.mount("http://", adapter)
 
     def _load_token_from_disk(self) -> dict:
         """
