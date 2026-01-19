@@ -23,8 +23,11 @@ py -3 -m pip install -U tn_sdk
 ```python
 import json
 import tn_sdk
-
-tn_client = tn_sdk.TnApi()
+# Client ID and Client Secret can be retrieved from the Admin Panel
+tn_client = tn_sdk.TnApi(
+    client_id="...", # Can be set via TN_SDK_CLIENT_ID env variable
+    client_secret="...", # Can be set via TN_SDK_CLIENT_SECRET env variable
+)
 request_data = {
     "trip_id": "",
     "datasource_responses": {

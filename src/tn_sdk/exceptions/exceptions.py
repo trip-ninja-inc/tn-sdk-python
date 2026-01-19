@@ -30,3 +30,13 @@ class InvalidDataException(TnApiException):
 
     def __init__(self, message: str = DEFAULT_MESSAGE, code: str = DEFAULT_CODE):
         super().__init__(message, code=code)
+
+
+class TnAuthenticationFailedException(TnApiException):
+    """Raised when authentication failed."""
+
+    DEFAULT_MESSAGE = "Authentication failed"
+    DEFAULT_CODE = "AUTH_FAILED"
+
+    def __init__(self, message: str = DEFAULT_MESSAGE, code: str = DEFAULT_CODE):
+        super().__init__(message, code=code)
