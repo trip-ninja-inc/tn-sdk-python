@@ -161,6 +161,7 @@ class TnApi:
             msg = "Authentication failed"
             if err.response is not None:
                 msg += f": {err.response.text}"
+
             raise TnAuthenticationFailedException(msg) from err
 
     def _request(
