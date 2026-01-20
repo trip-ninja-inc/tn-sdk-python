@@ -1,16 +1,20 @@
 import json
-import unittest
 import zlib
 from base64 import b64encode
 
 from tn_sdk import TnApi
 from tn_sdk.exceptions.exceptions import InvalidDataException
+from tn_sdk.tests.test_tn_api.base_tn_api_test import BaseTnApiTest
 
 
-class TestPrepareDataForGenerateSolutions(unittest.TestCase):
+class TestPrepareDataForGenerateSolutions(BaseTnApiTest):
     def setUp(self):
         """Create a reusable client instance for tests."""
-        self.api_prod = TnApi()
+        super().setUp()
+        self.api_prod = TnApi(
+            client_id="client_id",
+            client_secret="client_secret",
+        )
 
     def test_prepare_data_for_generate_solutions__valid_data__returns_bytes(self):
         input_data = {"test": "value"}
