@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tn_sdk"
-version = "0.0.2"
+version = "0.0.3"
 description = "Trip Ninja SDK"
 requires-python = ">= 3.10"
 license = { file = "LICENSE" }
 readme = "README.md"
 dependencies = [
+    "requests==2.32.5"
 ]
 
 [project.optional-dependencies]
